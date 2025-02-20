@@ -1,0 +1,37 @@
+package com.agroapp.backend.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
+public class DetallePedido {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idDetallePedido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pedido", nullable = false)
+    @NotNull(message = "El pedido es obligatorio")
+    private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "id_producto", nullable = false)
+    @NotNull(message = "El producto es obligatorio")
+    private Producto producto;
+
+    @NotNull(message = "La cantidad es obligatoria")
+    @Min(value = 1, message = "La cantidad debe ser al menos 1")
+    private Integer cantidad;
+
+    @NotNull(message = "El subtotal es obligatorio")
+    @DecimalMin(value = "0.01", message = "El subtotal debe ser mayor a 0")
+    @Column(nullable = false)
+    private Double subtotal;
+}
