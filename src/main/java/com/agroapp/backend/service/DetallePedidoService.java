@@ -3,10 +3,12 @@ package com.agroapp.backend.service;
 import com.agroapp.backend.model.DetallePedido;
 import com.agroapp.backend.repository.IDetallePedidoRepository;
 import com.agroapp.backend.service.interfaces.IDetallePedidoService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class DetallePedidoService implements IDetallePedidoService {
 
     private final IDetallePedidoRepository detallePedidoRepository;
