@@ -2,55 +2,47 @@ package com.agroapp.backend.service;
 
 import com.agroapp.backend.model.Usuario;
 import com.agroapp.backend.repository.IUsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.agroapp.backend.service.interfaces.IUsuarioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UsuarioService implements IUsuarioService{
+public class UsuarioService implements IUsuarioService {
 
-    @Autowired
-    private IUsuarioRepository usuarioRepository;
+    private final IUsuarioRepository usuarioRepository;
 
-    @Override
-    public List<Usuario> getAllUsuarios() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        if (usuarios.isEmpty()) {
-            return null;
-        }
-        return usuarios;
+    public UsuarioService(IUsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
-    public Usuario getUsuarioById(Integer id) {
-        return usuarioRepository.findById(id).orElse(null);
+    public List<Usuario> getAll() {
+        return usuarioRepository.findAll();
     }
 
     @Override
-    public Usuario createUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public Optional<Usuario> getById(Integer id) {
+        return usuarioRepository.findById(id);
     }
 
     @Override
-    public Usuario updateUsuario(Integer id, Usuario usuario) {
-        Usuario existingUsuario = usuarioRepository.findById(id).orElse(null);
-        if (existingUsuario != null) {
-            existingUsuario.setCorreo(usuario.getCorreo());
-            existingUsuario.setContrasena(usuario.getContrasena());
-            existingUsuario.setNombre(usuario.getNombre());
-            existingUsuario.setApellido(usuario.getApellido());
-            existingUsuario.setTelefono(usuario.getTelefono());
-            return usuarioRepository.save(existingUsuario);
+    public Usuario create(Usuario entity) {
+        return usuarioRepository.save(entity);
+    }
+
+    @Override
+    public Usuario updateById(Integer id, Usuario entity) {
+        if (usuarioRepository.existsById(id)) {
+            entity.setIdUsuario(id);
+            return usuarioRepository.save(entity);
         }
         return null;
     }
 
     @Override
-    public void deleteUsuario(Integer id) {
-        Usuario deletingUsuario = usuarioRepository.findById(id).orElseThrow(null);
-        if (deletingUsuario != null) {
-            usuarioRepository.deleteById(deletingUsuario.getIdUsuario());
-        }
+    public void deleteById(Integer id) {
+        usuarioRepository.deleteById(id);
     }
 }

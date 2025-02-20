@@ -1,6 +1,8 @@
 package com.agroapp.backend.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,21 +18,29 @@ import java.util.List;
 @Entity
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idPedido;
+
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
+    @NotNull(message = "El usuario es obligatorio")
     private Usuario usuario;
+
+    @NotNull(message = "La fecha del pedido es obligatoria")
+    @Column(nullable = false)
     private Date fechaPedido;
+
+    @NotNull(message = "El total es obligatorio")
+    @DecimalMin(value = "0.01", message = "El total debe ser mayor a 0")
+    @Column(nullable = false)
     private Double total;
+
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "El estado es obligatorio")
+    @Column(nullable = false)
     private Estado estado;
-    @OneToMany (mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<DetallePedido> detalles;
-    @OneToOne (mappedBy = "pedido", cascade = CascadeType.ALL)
-    private Pago pago;
+
     public enum Estado{
         PENDIENTE, ENTREGADO
     }
-
 }
