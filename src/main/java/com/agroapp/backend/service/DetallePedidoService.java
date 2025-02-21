@@ -42,7 +42,7 @@ public class DetallePedidoService implements IDetallePedidoService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id)   {
         detallePedidoRepository.deleteById(id);
     }
 }
