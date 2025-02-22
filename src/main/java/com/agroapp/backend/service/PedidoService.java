@@ -3,10 +3,12 @@ package com.agroapp.backend.service;
 import com.agroapp.backend.model.Pedido;
 import com.agroapp.backend.repository.IPedidoRepository;
 import com.agroapp.backend.service.interfaces.IPedidoService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PedidoService implements IPedidoService {
 
     private final IPedidoRepository pedidoRepository;

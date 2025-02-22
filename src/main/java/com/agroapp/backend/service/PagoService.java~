@@ -3,12 +3,10 @@ package com.agroapp.backend.service;
 import com.agroapp.backend.model.Pago;
 import com.agroapp.backend.repository.IPagoRepository;
 import com.agroapp.backend.service.interfaces.IPagoService;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 public class PagoService implements IPagoService {
 
     private final IPagoRepository pagoRepository;
