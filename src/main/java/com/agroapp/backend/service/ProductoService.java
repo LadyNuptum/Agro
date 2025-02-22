@@ -3,10 +3,12 @@ package com.agroapp.backend.service;
 import com.agroapp.backend.model.Producto;
 import com.agroapp.backend.repository.IProductoRepository;
 import com.agroapp.backend.service.interfaces.IProductoService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class ProductoService implements IProductoService {
 
     IProductoRepository productoRepository;
