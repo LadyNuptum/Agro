@@ -30,11 +30,6 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Usuario> create(@Valid @RequestBody Usuario usuario) {
-        return ResponseEntity.ok(usuarioService.create(usuario));
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable Integer id, @Valid @RequestBody Usuario usuario) {
         Usuario updatedUser = usuarioService.updateById(id, usuario);

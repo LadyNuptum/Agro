@@ -26,8 +26,8 @@ public class Usuario {
     private String correo;
 
     @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, max = 20, message = "La contraseña debe tener entre 6 y 20 caracteres")
-    @Column(nullable = false, length = 20)
+    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    @Column(nullable = false, length = 200)
     private String contrasena;
 
     @NotBlank(message = "El nombre es obligatorio")
