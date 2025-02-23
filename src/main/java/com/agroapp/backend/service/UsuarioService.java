@@ -32,8 +32,15 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public Usuario create(Usuario entity) {
+        // Verifica si el correo ya está registrado
+        if (usuarioRepository.existsByCorreo(entity.getCorreo())) {
+            throw new RuntimeException("El correo ya está registrado. Por favor, usa otro.");
+        }
+
         // Encripta la contraseña antes de guardar
         entity.setContrasena(passwordEncoder.encode(entity.getContrasena()));
+
+        // Guarda el usuario en la base de datos
         return usuarioRepository.save(entity);
     }
 

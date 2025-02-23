@@ -1,4 +1,4 @@
-package com.agroapp.backend.service;
+package com.agroapp.backend;
 
 
 import org.springframework.context.annotation.Configuration;

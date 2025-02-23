@@ -1,16 +1,21 @@
 package com.agroapp.backend.model;
 
+import com.agroapp.backend.repository.IUsuarioRepository;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import com.agroapp.backend.repository.IUsuarioRepository;
 
 @NoArgsConstructor
+
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -26,8 +31,7 @@ public class Usuario {
     private String correo;
 
     @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, max = 20, message = "La contraseña debe tener entre 6 y 20 caracteres")
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 255) // Se aumenta el tamaño para almacenar la contraseña encriptada
     private String contrasena;
 
     @NotBlank(message = "El nombre es obligatorio")
@@ -41,7 +45,20 @@ public class Usuario {
     private String apellido;
 
     @NotBlank(message = "El teléfono es obligatorio")
-    @Pattern(regexp = "\\d{10}", message = "El teléfono debe tener 10 dígitos")
-    @Column(nullable = false, length = 10)
+    @Size(max = 15, message = "El teléfono no puede superar los 15 caracteres")
+    @Column(nullable = false, length = 15)
     private String telefono;
+
+    @Transient // No se mapea en la BD
+    @Autowired
+    private transient IUsuarioRepository usuarioRepository;
+
+    @PrePersist
+    @PreUpdate
+    @Transactional
+    private void verificarCorreoUnico() {
+        if (usuarioRepository != null && usuarioRepository.existsByCorreo(this.correo)) {
+            throw new RuntimeException("El correo ya está registrado");
+        }
+    }
 }
