@@ -1,4 +1,0 @@
-package com.agroapp.backend.repository;
-
-public interface IUsuarioRepository {
-}
