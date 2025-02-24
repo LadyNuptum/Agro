@@ -19,7 +19,7 @@ public class ProductoController {
         this.productoService = productoService;
     }
 
-    @GetMapping
+    @GetMapping("/traer")
     public ResponseEntity<List<Producto>> getAll() {
         return ResponseEntity.ok(productoService.getAll());
     }
