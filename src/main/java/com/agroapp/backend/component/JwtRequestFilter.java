@@ -37,7 +37,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (correo != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByCorreo(correo);
+            UserDetails userDetails = userService.loadUserDetailsByCorreo(correo);
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authToken);

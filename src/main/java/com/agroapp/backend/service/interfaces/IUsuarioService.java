@@ -11,7 +11,7 @@ public interface IUsuarioService {
 
     Optional<Usuario> getById(Integer id);
 
-    UserDetails loadUserByCorreo(String correo);
+    UserDetails loadUserDetailsByCorreo(String correo);
 
     Usuario create(Usuario entity);
 

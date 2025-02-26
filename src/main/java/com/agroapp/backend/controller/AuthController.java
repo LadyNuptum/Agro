@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,12 +52,17 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity <Map<String, String>> login(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         Map<String, String> response = new HashMap<>();
-        UserDetails usuario = usuarioService.loadUserByCorreo(usuarioDTO.getCorreo());
+        UserDetails usuario = usuarioService.loadUserDetailsByCorreo(usuarioDTO.getCorreo());
+        Usuario user = usuarioService.loadUserByCorreo(usuarioDTO.getCorreo());
+
         if (usuario == null || !passwordEncoder.matches(usuarioDTO.getContrasena(), usuario.getPassword())) {
             response.put("message", "Correo o contraseña incorrectos");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
         String token = jwtUtil.generateToken(usuario.getUsername());
-        return ResponseEntity.ok(Map.of("token", token));
+        response.put("token",token);
+        response.put("nombre", user.getNombre());
+        response.put("apellido", user.getApellido());
+        return ResponseEntity.ok(response);
     }
 }

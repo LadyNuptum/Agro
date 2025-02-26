@@ -34,7 +34,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public UserDetails loadUserByCorreo(String correo) throws UsernameNotFoundException {
+    public UserDetails loadUserDetailsByCorreo(String correo) throws UsernameNotFoundException {
         Optional<Usuario> usuario = usuarioRepository.findByCorreo(correo);
         if (usuario.isEmpty()) {
             throw new UsernameNotFoundException("Usuario no encontrado");
@@ -68,5 +68,9 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public void deleteById(Integer id) {
         usuarioRepository.deleteById(id);
+    }
+
+    public Usuario loadUserByCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo).orElse(null);
     }
 }
