@@ -35,6 +35,9 @@ jobs:
       - name: Build JAR with Maven
         run: mvn clean package -DskipTests
 
+      - name: Rename JAR for deployment
+        run: cp target/backend-0.0.1-SNAPSHOT.jar target/app.jar
+
       - name: Confirm JAR exists
         run: ls -l target && test -f target/app.jar
 
